@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- CSS / JS -->
+<section th:replace="common :: cssAndJS"></section>
+
+<!-- Head -->
+<head th:replace="common :: head('Admin Utilities')"></head>
+
+<body>
+
+	<!-- Top Navigation -->
+	<div th:replace="common :: topNav"></div>
+
+	<!-- Main -->
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1>Admin Utilities</h1>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Admin Data</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<label for="inputUptime" class="control-label">Uptime</label> 
+						<input type="text" disabled="disabled"
+							class="form-control" id="inputUptime"
+							th:value="${uptime}" />
+					</div>
+				</div>
+				
+				<div class="row">
+					<div th:each="msg, msgStat : ${messages}" class="col-md-12">
+						<label for="${msgStat.index}" class="control-label" th:text="'Message #' + ${msgStat.index}">Message</label> 
+						<input type="text" disabled="disabled"
+							class="form-control" id="${msgStat.index}"
+							th:value="${msg}" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

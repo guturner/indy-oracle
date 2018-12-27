@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- CSS / JS -->
+<section th:replace="common :: cssAndJS"></section>
+
+<!-- Head -->
+<head th:replace="common :: head(Profile)"></head>
+
+<body>
+
+	<!-- Top Navigation -->
+	<div th:replace="common :: topNav"></div>
+
+	<!-- Main -->
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1>Profile</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="alert alert-dismissable alert-danger"
+			th:if="${errors != null and not #lists.isEmpty(errors)}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<!--/*/ <th-block data-th-each="error : ${errors}"> /*/-->
+			<p th:text="${error.defaultMessage}">|Error message here.|</p>
+			<!--/*/ </th-block> /*/-->
+		</div>
+
+		<div class="row">
+			<div th:class="${isAdmin} ? col-lg-8 : col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Info</div>
+					<form th:action="@{/user/profile}" th:object="${userBean}"
+						method="post">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="inputFirstName" class="control-label">First
+										Name</label> <input type="text" th:field="*{firstName}"
+										class="form-control" id="inputFirstName" placeholder="John"
+										th:value="${userBean.firstName}" />
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="inputLastName" class="control-label">Last
+										Name</label> <input type="text" th:field="*{lastName}"
+										class="form-control" id="inputLastName" placeholder="Smith"
+										th:value="${userBean.lastName}" />
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="inputPhoneNumber" class="control-label">Phone</label>
+									<input type="text" th:field="*{phoneNumber}"
+										class="form-control" id="inputPhoneNumber"
+										placeholder="3171234567" th:value="${userBean.phoneNumber}" />
+									<span class="help-block">* Do not include hyphens.</span>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="inputPhoneCarrier" class="control-label help-text"
+										data-toggle="tooltip"
+										title="Why do we need this? Indy Oracle uses 'Email -> SMS' to text you, this varies depending on carrier.">Phone
+										Carrier</label> <select type="text" th:field="*{phoneCarrier}"
+										class="form-control" id="inputPhoneCarrier"
+										placeholder="3171234567"
+										th:selected="${userBean.phoneCarrier}">
+										<!-- Null Value -->
+										<option value="" />
+										<option th:each="opt : ${options}" th:value="${opt}"
+											th:text="${opt}">opt</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<button type="submit" class="btn btn-primary">Update</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div th:if="${isAdmin == true}" class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">Admin Data</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<label for="inputUniqueId" class="control-label">Approval ID</label> 
+								<input type="text" disabled="disabled"
+									class="form-control" id="inputUniqueId"
+									th:value="${userBean.uniqueId}" />
+								<span class="help-block">* Give to new users so they can register.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	// Enable tooltips:
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+
+	// Phone Number validation check:
+	$(document).ready(function() {
+		$('#inputPhoneNumber').on('focusout', function(e) {
+			$.ajax({
+				url : '/user/validate',
+				data : ({
+					phoneNumber : $('#inputPhoneNumber').val()
+				}),
+				success : function(data) {
+					$('#inputPhoneNumber').val(data.result);
+				},
+				error : function(e) {
+					alert("Error: " + e);
+				}
+			})
+		});
+	});
+</script>
+
+</html>

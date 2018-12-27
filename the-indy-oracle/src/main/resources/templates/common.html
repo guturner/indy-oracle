@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<!-- This is a collection of common fragments to be reused in other HTML files. -->
+	<!-- Create a fragment by including "th:fragment=" and then use it with "th:replace". -->
+	
+	<!-- Fragment #1: Head -->
+	<head th:fragment="head(subtitle)">
+	    <title th:text="'Indy Oracle - ' + ${subtitle}"></title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+	<!-- Fragment #2: CSS / JS -->
+	<section th:fragment="cssAndJS">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
+		<link rel="stylesheet" th:href="@{/css/superhero.css}"></link>
+		<link rel="stylesheet" th:href="@{/css/additional.css}"></link>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.2/js/tether.js"></script>
+		<script th:src="@{/js/typed.js}"></script>
+	</section>
+	
+	<!-- Fragment #3: Top Navigation -->
+	<div class="navbar navbar-default navbar-fixed-top" th:fragment="topNav">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <a href="/?skip=y" class="navbar-brand">Indy Oracle</a>
+	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+	    <div class="navbar-collapse collapse" id="navbar-main">
+	      
+	      <ul th:if="${isAdmin == true}" class="nav navbar-nav">
+	      	<li>
+	      		<a href="/admin">Admin Util</a>
+	      	</li>
+	      </ul>
+	      
+	      <ul class="nav navbar-nav navbar-right">
+	      	<!-- If NOT Logged In -->
+	        <li th:if="${user == null}">
+	        	<a href="/auth">Login</a>
+	        </li>
+	        
+	        <!-- If Logged In -->
+	        <li th:if="${user != null}">
+	        	<a th:text="${user.fullName}" href="/user/profile" />
+	        </li>
+	        <li th:if="${user != null}">
+	        	<p class="navbar-text">|</p> 
+	        </li>
+	        <li th:if="${user != null}">
+	        	<a href="/logout">Logout</a>
+	        </li>
+	      </ul>
+	
+	    </div>
+	  </div>
+	</div>
+		
+</html>

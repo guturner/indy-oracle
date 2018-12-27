@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- CSS / JS -->
+<section th:replace="common :: cssAndJS"></section>
+
+<!-- Head -->
+<head th:replace="common :: head(Login)"></head>
+
+<body>
+
+	<!-- Top Navigation -->
+	<div th:replace="common :: topNav"></div>
+
+	<!-- Main -->
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6">
+					<h1>Login</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="well bs-component">
+			<div class="alert alert-dismissable alert-danger"
+				th:if="${errors != null and not #lists.isEmpty(errors)}">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<!--/*/ <th-block data-th-each="error : ${errors}"> /*/-->
+				<p th:text="${error}">|Error message here.|</p>
+				<!--/*/ </th-block> /*/-->
+			</div>
+
+			<form method="post" th:action="@{/auth}" th:object="${stormpathLoginBean}" role="form"
+				class="form-horizontal">
+				
+				<div th:each="field : ${visibleFields}" form-group="true"
+					th:class="'form-group group-' + ${field.name}">
+					<label class="col-md-12" th:text="${field.label}">|Field
+						label|</label>
+
+					<div class="col-md-6">
+						<input th:name="${field.name}" th:attr="field = ${field.name}"
+							th:type="${field.type}" th:placeholder="${field.placeholder}"
+							th:required="${field.required}"
+							class="form-control" />
+					</div>
+				</div>
+
+				<div>
+					<button type="submit" class="btn btn-primary"
+						th:text="#{stormpath.web.login.form.button.value}">|Login|</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+
+</html>

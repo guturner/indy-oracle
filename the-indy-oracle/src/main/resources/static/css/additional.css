@@ -1,0 +1,81 @@
+.top-buffer {
+	margin-top: 5%;
+}
+
+.progress-66 {
+	width: 66%;
+}
+
+.progress-75 {
+	width: 75%;
+}
+
+.progress-100 {
+	width: 100%;
+}
+
+.help-text {
+	color: #b0e0e6;
+}
+
+.link-text {
+	color: #b0e0e6;
+}
+
+.hide {
+	display: none;
+}
+
+.welcome {
+	display: inline;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+	background-color: rgba(0, 0, 0, 0.5);
+    margin-left: auto;
+    margin-right: auto; 
+    opacity: 0.5;
+    width: 100%;
+}
+
+.inner-text {
+	color: #b0e0e6;
+	font-family: Monaco, Consolas, "Lucida Console";
+	font-size: 350%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}

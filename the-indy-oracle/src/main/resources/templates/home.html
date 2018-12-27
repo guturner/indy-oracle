@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- CSS / JS -->
+<section th:replace="common :: cssAndJS"></section>
+
+<!-- Head -->
+<head th:replace="common :: head(Home)"></head>
+
+<body>
+
+	<!-- Top Navigation -->
+	<div id="top-nav">
+		<div th:replace="common :: topNav"></div>
+	</div>
+	
+	<!-- Welcome Animation -->
+	<div class="outer" id="welcome">
+		<div class="middle">
+			<div class="inner">
+				<div class="inner-text">
+					> <div class="welcome" id="welcome-header"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main -->
+	<div class="container" id="main">
+		
+		<div class="alert alert-dismissable alert-danger top-buffer"
+			th:if="${newUserFailed}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<p><strong>Failure!</strong> Something went wrong, you were not registered.</p>
+		</div>
+		
+		<div class="alert alert-dismissable alert-success top-buffer"
+			th:if="${newUser}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<p><strong>Success!</strong> You're now registered. Please log in.</p>
+		</div>
+		
+		<div th:if="${user == null}" th:class="${newUser} ? normal : top-buffer">
+			<div class="row col-lg-5 col-lg-offset-1">
+				<h2><i class="material-icons">perm_phone_msg</i> 317-584-ORCL (6725)</h2>
+				<p>
+					24 / 7 phone or text support. Call or text the Oracle hotline above to request an escort and the Watchtower will dispatch a hero.
+				</p>
+			</div>
+			
+			<div class="row col-lg-5 col-lg-offset-6">
+				<h2><i class="material-icons">info_outline</i> Who We Are</h2>
+				<p>
+					Indy Oracle is a small group of volunteers, carefully selected to guarantee short-term protection to fellow cosplayers in need.
+				</p>
+			</div>
+			
+			<div class="row col-lg-5 col-lg-offset-1">
+				<h2><i class="material-icons">supervisor_account</i> What We Do</h2>
+				<p>
+					Our volunteers are directly connected to the Oracle hotline and receive notifications from cosplayers who feel unsafe. We provide escorts through venues or to cars and can call for extra support if necessary.
+				</p>
+			</div>
+			
+			<div class="row col-lg-5 col-lg-offset-6">
+				<h2><i class="material-icons">security</i> Answer the Call</h2>
+				<p>
+					Indy Oracle is strictly invitation only, but if you have what it takes the Watchtower will be in touch. One of our heroes can provide you an access token so you too can <a href="/register" class="link-text">register</a>.
+				</p>
+			</div>
+		</div>
+		
+
+		<div class="row" th:if="${user != null}" th:class="${newUser} ? normal : top-buffer">
+			<div class="row col-lg-5 col-lg-offset-1">
+				<h2><i class="material-icons">store</i> Welcome Home, Hero</h2>
+				<p>
+					Update your profile to opt into the escort program. If you are no longer able to help, simply opt out using the button below your progress bar.
+				</p>
+			</div>
+			
+			<div class="row col-lg-5 col-lg-offset-6">
+				<h2><i class="material-icons">perm_phone_msg</i> 317-584-ORCL (6725)</h2>
+				<p>
+					Provide the Oracle hotline to your fellow cosplayers so that they know that we are ready to help!
+				</p>
+			</div>
+			
+			<div class="row col-lg-5 col-lg-offset-1">
+				<h2><i class="material-icons">sort</i> Profile Progress</h2>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" th:attr="aria-valuenow=${percentage}"
+						aria-valuemin="0" aria-valuemax="100"
+						th:classappend="(${profileDone} ? progress-100 : (${percentage} == '75' ? progress-75 : progress-66)) + ' ' + (${profileDone} ? progress-bar-success : progress-bar-info)">
+						<span th:text="${percentage}"/>
+					</div>
+				</div>
+				
+				<div class="col-md-9" th:if="${profileDone == true}">
+					<span style="font-size: .95em;">You are registered to receive text notifications.</span>
+				</div>
+				
+				<div class="col-md-1" th:if="${profileDone == true}">
+					<form th:action="@{/user/optout}" method="post">
+						<button type="submit" class="btn btn-primary">Opt Out?</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</body>
+<!-- Welcome Splash Screen -->
+<script type="text/javascript" th:inline="javascript">
+	$("#welcome").hide();
+
+	if ([[${skip}]] != true) {
+		$("#top-nav").hide();
+		$("#main").hide();
+		
+		$("#welcome").fadeIn(500, function() {
+		$("#welcome-header").typed({
+		        strings: ["EXEC PROGRAM('indy-oracle')", "CALL SUBROUTINE('watchtower')", "WELCOME HOME, HERO."],
+		        typeSpeed: 3, 
+		        backDelay: 1000, 
+		        loop: false, 
+		        loopCount: false, 
+		        callback: function(){ 
+		        	$("#welcome").delay(1500).fadeOut(500, function() {
+		        		$("#top-nav").fadeIn(1000);
+		        		$("#main").fadeIn(1000);
+		        	});
+		        } 
+		    });
+		});
+	}
+</script>
+
+</html>
